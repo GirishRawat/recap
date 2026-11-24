@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+.DS_Store
+
+# Swift
+capture-helper/.build/
+capture-helper/.swiftpm/
+
+# Large fixture media
+fixtures/*.mp4
+fixtures/*.mov
+fixtures/*.wav
+fixtures/*.opus

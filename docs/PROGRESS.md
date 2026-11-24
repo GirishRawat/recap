@@ -1,0 +1,96 @@
+# Progress
+
+The single source of truth for what's built and what's next. **Update this at the end of every work session.**
+
+- Tick boxes as things are finished (only when the milestone's check actually passes).
+- Add a dated entry to the session log: what was done, what's in progress, anything blocked.
+- Record design choices in [`DECISIONS.md`](DECISIONS.md), not here.
+
+Finish each milestone, with its check passing, before starting the next (see [`SPEC.md`](SPEC.md) § Build plan).
+
+## Current focus
+
+**Milestone 1: Skeleton.** Next up: Pydantic models and config loading.
+
+## Milestones
+
+### 0. Project setup
+- [x] Repo layout, README, pyproject, .gitignore
+- [x] Progress tracking (`docs/PROGRESS.md`, `docs/DECISIONS.md`, `CLAUDE.md`)
+- [ ] `git init` and first commit
+
+### 1. Skeleton
+- [ ] Typer CLI with every command stubbed (`setup`, `record`, `stop`, `import`, `process`, `ask`, `chat`)
+- [ ] Config loading from `~/Recap/config.toml` with defaults
+- [ ] Pydantic models: `Segment`, `Word`, `Slide`, `NoteItem`, `Notes`, `Highlight`, `Scene`, `Meeting`
+- [ ] Provider protocols: `Transcriber`, `LLM`, `Embedder`, `TTS`, `OCR`
+- [ ] Stage runner: skip finished stages, `--from`, `--force`, status in `meeting.json`
+- [ ] Per-stage logging to `<meeting>/logs/`
+- [ ] Unit tests for the stage runner
+- **Check:** `recap --help` lists every command; stage runner unit tests pass.
+
+### 2. Import + transcribe + slides
+- [ ] Get a fixture recording + answer key into `fixtures/`
+- [ ] Snapshot filter (dHash > 10 bits, > 15% pixels changed, next frame stable within 4 bits) + unit tests
+- [ ] `recap import <video.mp4>` (ffmpeg audio extract, 1 fps frames through the filter)
+- [ ] Transcribe stage (mlx-whisper, VAD, word timestamps, per track, merge timeline)
+- [ ] Mic-bleed removal + unit tests
+- [ ] `transcript.srt` output
+- [ ] Slides stage (cross-meeting dedup, Apple Vision OCR, numbering) + dedup unit tests
+- [ ] Align stage (`timeline.json`)
+- **Check:** `transcript.srt` plays in sync in VLC; `slides/` holds one image per distinct slide.
+
+### 3. Notes
+- [ ] Ollama LLM provider with JSON-schema `format`
+- [ ] Per-window extraction (~10 min windows, slide text in prompt)
+- [ ] Merge call → `notes.json`
+- [ ] Citation validation in code + unit tests
+- [ ] `notes.md` template rendering
+- **Check:** every item cites existing segments; `notes.md` renders with working slide links.
+
+### 4. Highlight video
+- [ ] LLM ranking of candidate moments
+- [ ] Clip selection rules in code (10–30 s, snap + 0.3 s pad, no overlap, ≤ 180 s, meeting order) + unit tests
+- [ ] Pillow title cards (bundled font)
+- [ ] ffmpeg assembly: fades, captions, cards, loudnorm, 1280x720 H.264/AAC
+- **Check:** 2–3 min, clips 10–30 s, correct slide behind each clip, captions in sync.
+
+### 5. Explainer video
+- [ ] Script generation (5–8 scenes, ≤ 35 words each, ≤ 220 total)
+- [ ] Faithfulness check (rewrite once, then drop)
+- [ ] Kokoro TTS provider (Piper fallback)
+- [ ] Scene rendering (zoompan / cards, captions) and join
+- **Check:** ≤ 220 words, every sentence passes faithfulness, plays without gaps.
+
+### 6. Ask questions
+- [ ] Whole-context path for short meetings (25% headroom)
+- [ ] Embedding index (`nomic-embed-text`, ~30 s chunks + slide OCR) for long meetings
+- [ ] Citation checking, "not discussed" behaviour
+- [ ] `recap ask`, `recap chat`
+- **Check:** 9/10 answerable right, 3/3 unanswerable declined.
+
+### 7. Live capture on macOS
+- [ ] Swift `recap-capture` helper (SCStream window filter + system audio, AVAudioEngine mic, 5-min WAV chunks, JSON-lines progress)
+- [ ] Opus encoding + `mix.opus` on stop
+- [ ] Meeting window detection (Zoom / Teams / Meet), `--window` override, pause when hidden
+- [ ] Hotkey (pynput) + menu bar indicator (rumps)
+- [ ] Permissions flow + consent reminder
+- [ ] Auto-process after stop (≥ `min_minutes_to_process`)
+- **Check:** 30-min test call → complete folder, no manual steps; mid-call kill loses ≤ 5 min.
+
+### 8. Packaging and README
+- [ ] `recap setup` (dependency check, model download, RAM-based config)
+- [ ] Install instructions, demo GIF, CONTRIBUTING
+- [ ] Licence chosen after dependency licence review
+- [ ] "No network" test
+- **Check:** clean Mac → processed meeting following only the README.
+
+## Session log
+
+Newest first.
+
+### 2026-11-24
+- Read the spec, saved it to `docs/SPEC.md`.
+- Created the repo layout (`src/recap/` packages with stub modules per milestone, `capture-helper/`, `tests/`, `fixtures/`), `pyproject.toml`, `.gitignore`, README.
+- Set up progress tracking: this file, `DECISIONS.md`, `CLAUDE.md`.
+- **Next:** `git init`, then start Milestone 1 with `models.py` and `config.py`.
