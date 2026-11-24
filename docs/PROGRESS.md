@@ -10,7 +10,7 @@ Finish each milestone, with its check passing, before starting the next (see [`S
 
 ## Current focus
 
-**Milestone 1: Skeleton.** Next up: Pydantic models and config loading.
+**Milestone 2: Import + transcribe + slides.** Next up: get the fixture recording and answer key, then the snapshot filter (pure code, unit-testable with synthetic frames).
 
 ## Milestones
 
@@ -20,14 +20,14 @@ Finish each milestone, with its check passing, before starting the next (see [`S
 - [x] `git init`, first commit, GitHub repo (GirishRawat/recap, public)
 
 ### 1. Skeleton
-- [ ] Typer CLI with every command stubbed (`setup`, `record`, `stop`, `import`, `process`, `ask`, `chat`)
-- [ ] Config loading from `~/Recap/config.toml` with defaults
-- [ ] Pydantic models: `Segment`, `Word`, `Slide`, `NoteItem`, `Notes`, `Highlight`, `Scene`, `Meeting`
-- [ ] Provider protocols: `Transcriber`, `LLM`, `Embedder`, `TTS`, `OCR`
-- [ ] Stage runner: skip finished stages, `--from`, `--force`, status in `meeting.json`
-- [ ] Per-stage logging to `<meeting>/logs/`
-- [ ] Unit tests for the stage runner
-- **Check:** `recap --help` lists every command; stage runner unit tests pass.
+- [x] Typer CLI with every command stubbed (`setup`, `record`, `stop`, `import`, `process`, `ask`, `chat`)
+- [x] Config loading from `~/Recap/config.toml` with defaults
+- [x] Pydantic models: `Segment`, `Word`, `Slide`, `NoteItem`, `Notes`, `Highlight`, `Scene`, `Meeting`
+- [x] Provider protocols: `Transcriber`, `LLM`, `Embedder`, `TTS`, `OCR`
+- [x] Stage runner: skip finished stages, `--from`, `--force`, status in `meeting.json`
+- [x] Per-stage logging to `<meeting>/logs/`
+- [x] Unit tests for the stage runner
+- **Check:** `recap --help` lists every command; stage runner unit tests pass. ✅ Passed 2026-11-24 (29 tests).
 
 ### 2. Import + transcribe + slides
 - [ ] Get a fixture recording + answer key into `fixtures/`
@@ -89,7 +89,15 @@ Finish each milestone, with its check passing, before starting the next (see [`S
 
 Newest first.
 
-### 2026-11-24
+### 2026-11-24 (Milestone 1)
+- Built the skeleton: `models.py` (all spec records + `Meeting`/`StageState` for meeting.json), `config.py` (TOML with spec defaults, unknown keys rejected, `RECAP_HOME` override), `providers/protocols.py`, `pipeline/runner.py`, six stub stages that raise "not built yet (Milestone N)", `meetings.py` (`last` / name / path), `log.py`, and the Typer CLI.
+- `recap process` is wired to the real runner; other commands say which milestone builds them.
+- 29 unit tests (runner, config, models, CLI); ruff clean. Dev env: `uv venv -p 3.12`.
+- Fixed along the way: the default meetings folder ignored `RECAP_HOME`.
+- **Milestone 1 check passed.**
+- **Next:** Milestone 2. The user needs to provide the fixture recording + answer key (see `fixtures/README.md`). Snapshot filter can start before that.
+
+### 2026-11-24 (setup)
 - Read the spec, saved it to `docs/SPEC.md`.
 - Created the repo layout (`src/recap/` packages with stub modules per milestone, `capture-helper/`, `tests/`, `fixtures/`), `pyproject.toml`, `.gitignore`, README.
 - Set up progress tracking: this file, `DECISIONS.md`, `CLAUDE.md`.
