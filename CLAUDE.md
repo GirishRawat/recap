@@ -23,3 +23,7 @@ Local meeting recorder for Apple Silicon Macs. Full spec: `docs/SPEC.md`.
 - `uv venv && uv pip install -e '.[dev]'`
 - `pytest`
 - `ruff check .`
+
+## Git
+- Remote: https://github.com/GirishRawat/recap (private). Branch: `main`.
+- **Never add `Co-Authored-By: Claude` or "Generated with Claude Code" lines** to commits or PRs. Commits are credited to the repo owner only.

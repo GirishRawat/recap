@@ -17,7 +17,7 @@ Finish each milestone, with its check passing, before starting the next (see [`S
 ### 0. Project setup
 - [x] Repo layout, README, pyproject, .gitignore
 - [x] Progress tracking (`docs/PROGRESS.md`, `docs/DECISIONS.md`, `CLAUDE.md`)
-- [ ] `git init` and first commit
+- [x] `git init`, first commit, private GitHub repo (GirishRawat/recap)
 
 ### 1. Skeleton
 - [ ] Typer CLI with every command stubbed (`setup`, `record`, `stop`, `import`, `process`, `ask`, `chat`)
@@ -93,4 +93,5 @@ Newest first.
 - Read the spec, saved it to `docs/SPEC.md`.
 - Created the repo layout (`src/recap/` packages with stub modules per milestone, `capture-helper/`, `tests/`, `fixtures/`), `pyproject.toml`, `.gitignore`, README.
 - Set up progress tracking: this file, `DECISIONS.md`, `CLAUDE.md`.
-- **Next:** `git init`, then start Milestone 1 with `models.py` and `config.py`.
+- Created private GitHub repo GirishRawat/recap and pushed.
+- **Next:** start Milestone 1 with `models.py` and `config.py`.
