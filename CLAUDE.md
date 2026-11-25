@@ -12,6 +12,7 @@ You own this codebase and its design. Act like a maintainer who will live with e
 ## At the start of every session
 1. Read `docs/PROGRESS.md` (current focus, milestone checklist, session log).
 2. Skim `docs/DECISIONS.md` for choices already made.
+3. Check `private/research/` (local only) for research relevant to the task.
 
 ## At the end of every session (or when a chunk of work is done)
 1. Tick finished items in `docs/PROGRESS.md`; update "Current focus".
@@ -34,3 +35,4 @@ You own this codebase and its design. Act like a maintainer who will live with e
 ## Git
 - Remote: https://github.com/GirishRawat/recap (public). Branch: `main`.
 - **Never add `Co-Authored-By: Claude` or "Generated with Claude Code" lines** to commits or PRs. Commits are credited to the repo owner only.
+- `private/` is git-ignored and holds the owner's local notes and research (e.g. `private/research/`). Read it for context; never commit it or copy its contents into tracked files.

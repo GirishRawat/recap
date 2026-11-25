@@ -17,3 +17,6 @@ fixtures/*.mp4
 fixtures/*.mov
 fixtures/*.wav
 fixtures/*.opus
+
+# Private notes and research (kept local, never pushed)
+private/
